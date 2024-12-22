@@ -1,19 +1,19 @@
+import clsx from 'clsx'
 import Image, { type ImageProps } from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import { Stack, TechLayer } from '@/components/Stack'
-import logoDirectSupply from '@/images/logos/direct-supply.svg'
 import logoBdoUsa from '@/images/logos/bdo-usa.svg'
+import logoDirectSupply from '@/images/logos/direct-supply.svg'
 import image1 from '@/images/photos/image-1.jpg'
 import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
 import image4 from '@/images/photos/image-4.jpg'
 import image5 from '@/images/photos/image-5.jpg'
-import React from 'react'
 import { getYearsExperience } from '@/lib/utils'
+import React from 'react'
 
 function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   return (
@@ -66,11 +66,11 @@ function SocialLink({
 
 const technologies: TechLayer[] = [
   {
-    layer: 'Front-end Frameworks',
-    technologies: ['React', 'Next.js', 'Blazor'],
+    layer: 'Front-end',
+    technologies: ['React', 'Next.js', 'Tailwind CSS'],
   },
   {
-    layer: 'Backend Frameworks',
+    layer: 'Backend',
     technologies: ['Express.js', 'ASP.NET Core'],
   },
   {
@@ -79,11 +79,15 @@ const technologies: TechLayer[] = [
   },
   {
     layer: 'Languages',
-    technologies: ['JavaScript', 'TypeScript', 'C#', 'HTML', 'CSS', 'SQL'],
+    technologies: ['C#', 'TypeScript', 'Python', 'HTML', 'CSS', 'SQL', 'XAML'],
   },
   {
     layer: 'Cloud Providers',
     technologies: ['Microsoft Azure', 'Vercel'],
+  },
+  {
+    layer: 'Other',
+    technologies: ['Docker', 'Office Add-Ins', 'Windows Apps'],
   },
 ]
 
@@ -133,7 +137,7 @@ function Role({ role }: { role: Role }) {
 }
 
 function Resume() {
-  let resume: Array<Role> = [
+  let resume: Role[] = [
     {
       company: 'BDO USA',
       title: 'Software Developer',
@@ -184,7 +188,7 @@ function Photos() {
             key={image.src}
             className={clsx(
               'relative aspect-[9/10] w-44 flex-none overflow-hidden rounded-xl bg-zinc-100 sm:w-72 sm:rounded-2xl dark:bg-zinc-800',
-              rotations[imageIndex % rotations.length],
+              rotations[imageIndex % rotations.length]
             )}
           >
             <Image
@@ -206,13 +210,13 @@ export default async function Home() {
       <Container className="mt-9">
         <div className="max-w-2xl">
           <h1 className="text-4xl font-bold tracking-tight text-zinc-800 sm:text-5xl dark:text-zinc-100">
-            Software developer and enthusiast.
+            Hi, I&apos;m Sam.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            Hi, I&apos;m Sam. I&apos;m a software engineer based in Washington, D.C. I&apos;ve
-            been writing code for over {getYearsExperience()} years, and this is
-            my personal website. I built it to introduce myself, showcase my
-            work, and foster new connections.
+            I&apos;m a software engineer based in Washington, D.C. I&apos;ve
+            been writing code for over {getYearsExperience()}
+            years, and this is my personal website. I built it to introduce
+            myself, showcase my work, and foster new connections.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
@@ -231,8 +235,8 @@ export default async function Home() {
       <Photos />
       <Container className="mt-24 md:mt-28">
         <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="space-y-10 lg:pl-16 xl:pl-24 rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
-            <Stack layers={technologies} title='Technologies' />
+          <div className="space-y-10 rounded-2xl border border-zinc-100 p-6 lg:pl-16 xl:pl-24 dark:border-zinc-700/40">
+            <Stack layers={technologies} title="Technologies" />
           </div>
           <div className="space-y-10 lg:pl-16 xl:pl-24">
             <Resume />
