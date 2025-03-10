@@ -140,15 +140,30 @@ export default function CarveOuts() {
             put a fair number of features behind a pay wall, but I&apos;ve been
             happy with what&apos;s included for free.
           </Tool>
-          <Tool title="Beli (iOS and Android)">
-            This is my favorite app as of late. It&apos;s great for keeping
-            track of bars, restaurants, and cafes that you&apos;ve been to or
-            want to go to. It uses an algorithm to rank places you&apos;ve been
-            to and then uses those rankings to recommend new places. I&apos;ve
-            found it has all the restaurants in my area and shows them on a map
-            color coded by my rating or expected rating. The design is clean and
-            intuitive. I highly recommend it if you like checking new
-            restaurants off your list.
+          <Tool title="Tailscale">
+            TL;DR: Tailscale provides private peer-to-peer networking. It&apos;s
+            easy to setup and use. Use it to remote into other devices on your
+            network or use it like a traditional VPN to encrypt traffic on
+            unsecure networks. It&apos;s built on WireGuard and is free to use.
+            <br />
+            <br />
+            How is this different from a regular VPN? Unlike a traditional VPN,
+            there&apos;s no single VPN server. All the devices on the network
+            are interconnected. I primarily use this in two ways: (1) To route
+            traffic through an exit node. This operates similar to a traditional
+            VPN where all your traffic gets routed through the exit node;
+            although, instead of needing to be a dedicated server, any device on
+            the network can be made an exit node, even your phone. (2) Accessing
+            other devices on the network. Commonly, I&apos;ll use this to test
+            the mobile experience of web apps that I&apos;m developing on my
+            desktop.
+            <br />
+            <br />
+            Credit to my friend Daniel for recommending it to me. He said,
+            &quot;I budgeted a whole afternoon to setting it up and it ended up
+            only taking me 20 minutes.&quot; It requires basically zero setup
+            and everything just works. If you&apos;ve been wanting your own VPN,
+            I recommend giving Tailscale a shot.
           </Tool>
         </ToolsSection>
       </div>

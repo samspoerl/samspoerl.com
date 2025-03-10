@@ -213,10 +213,7 @@ export default async function Home() {
             Hi, I&apos;m Sam.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            I&apos;m a software engineer based in Washington, D.C. I&apos;ve
-            been writing code for over {getYearsExperience()}
-            years, and this is my personal website. I built it to introduce
-            myself, showcase my work, and foster new connections.
+            {`I'm a software engineer based in Washington, D.C. I've been writing code for over ${getYearsExperience()} years, and this is my personal website. I built it to introduce myself, showcase my work, and foster new connections.`}
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
