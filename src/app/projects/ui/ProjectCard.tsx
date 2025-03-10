@@ -32,11 +32,11 @@ export function ProjectCard({ project }: { project: Project }) {
             </a>
           )}
           <StatusTracker currentStatus={project.status} />
-          <p className="max-w-md text-sm text-zinc-600 dark:text-zinc-400">
+          <p className="max-w-md text-pretty text-justify text-sm text-zinc-600 dark:text-zinc-400">
             {project.description}
           </p>
           <div className="mt-4 flex flex-row justify-between gap-4">
-            <p className="max-w-md text-sm text-zinc-600 dark:text-zinc-400">
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
               {project.stack}
             </p>
             {project.gitHubLink && (
