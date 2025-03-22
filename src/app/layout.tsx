@@ -1,9 +1,8 @@
-import { type Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/react'
-
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/Layout'
-
+import { getSiteDescription } from '@/lib/utils'
+import { Analytics } from '@vercel/analytics/react'
+import { type Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -11,13 +10,8 @@ export const metadata: Metadata = {
     template: '%s - Sam Spoerl',
     default: 'Sam Spoerl',
   },
-  description:
-    'Hi, I’m Sam. I’m a software developer and enthusiast based in Washington, D.C. I’ve been writing code for over five years, and this is my personal website. I built it to introduce myself, showcase my work, and foster new connections.',
-  alternates: {
-    types: {
-      'application/rss+xml': `${process.env.NEXT_PUBLIC_SITE_URL}/feed.xml`,
-    },
-  },
+  description: getSiteDescription(),
+  keywords: ['sam spoerl', 'samspoerl', 'samuel spoerl', 'spoerl'],
 }
 
 export default function RootLayout({

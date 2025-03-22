@@ -12,7 +12,7 @@ import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
 import image4 from '@/images/photos/image-4.jpg'
 import image5 from '@/images/photos/image-5.jpg'
-import { getYearsExperience } from '@/lib/utils'
+import { getSiteDescription } from '@/lib/utils'
 import React from 'react'
 
 function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -213,7 +213,7 @@ export default async function Home() {
             Hi, I&apos;m Sam.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            {`I'm a software developer and data professional based in Washington, D.C. I've been writing code for over ${getYearsExperience()} years, and this is my personal website. I built it to introduce myself, showcase my work, and foster new connections.`}
+            {getSiteDescription()}
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
