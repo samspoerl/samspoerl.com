@@ -79,7 +79,7 @@ const technologies: TechLayer[] = [
   },
   {
     layer: 'Languages',
-    technologies: ['C#', 'TypeScript', 'Python', 'HTML', 'CSS', 'SQL', 'XAML'],
+    technologies: ['C#', 'TypeScript', 'Python', 'HTML', 'CSS', 'SQL', 'XAML', 'VB'],
   },
   {
     layer: 'Cloud Providers',

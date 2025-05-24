@@ -21,5 +21,5 @@ export function getYearsExperience(): string {
  * Site description used in home page and metadata description.
  */
 export function getSiteDescription() {
-  return `I'm a software developer and data professional based in Washington, D.C. I've been writing code for over ${getYearsExperience()} years, and this is my personal website. I built it to introduce myself, showcase my work, and foster new connections.`
+  return `I'm a software engineer and data professional based in Washington, D.C. I've been writing code for over ${getYearsExperience()} years, and this is my personal website. I built it to introduce myself, showcase my work, and foster new connections.`
 }
