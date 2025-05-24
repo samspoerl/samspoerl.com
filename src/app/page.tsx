@@ -140,7 +140,7 @@ function Resume() {
   let resume: Role[] = [
     {
       company: 'BDO USA',
-      title: 'TAS Deal Analytics',
+      title: 'TAS Data Analytics',
       logo: logoBdoUsa,
       start: '2021',
       end: {
