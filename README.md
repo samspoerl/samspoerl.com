@@ -16,6 +16,8 @@ Spot a typo or a bug? Open an issue or create a branch using the naming pattern 
 
 To learn more about the technologies used in this site, see the following resources:
 
-- [Tailwind CSS](https://tailwindcss.com/docs) - the official Tailwind CSS documentation
-- [Next.js](https://nextjs.org/docs) - the official Next.js documentation
-- [Headless UI](https://headlessui.dev) - the official Headless UI documentation
+- [Next.js](https://nextjs.org/docs) - full-stack web application framework
+- [React](https://react.dev) - library for web and native user interfaces
+- [Tailwind CSS](https://tailwindcss.com/docs) - utility-first CSS framework
+- [Tailwind Plus](https://tailwindcss.com/plus) - React components styled with Tailwind CSS
+- [Vercel](https://vercel.com/docs) - platform for deploying web apps
