@@ -6,7 +6,7 @@ import typographyStyles from './typography'
 export default {
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   darkMode: 'selector',
-  plugins: [typographyPlugin],
+  plugins: [typographyPlugin, require('tailwindcss-animate')],
   theme: {
     fontSize: {
       xs: ['0.8125rem', { lineHeight: '1.5rem' }],
@@ -24,5 +24,29 @@ export default {
       '9xl': ['8rem', { lineHeight: '1' }],
     },
     typography: typographyStyles,
+    extend: {
+      keyframes: {
+        'accordion-down': {
+          from: {
+            height: '0',
+          },
+          to: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+        },
+        'accordion-up': {
+          from: {
+            height: 'var(--radix-accordion-content-height)',
+          },
+          to: {
+            height: '0',
+          },
+        },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.2s ease-out',
+        'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+    },
   },
 } satisfies Config
