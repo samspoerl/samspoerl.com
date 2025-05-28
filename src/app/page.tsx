@@ -3,6 +3,12 @@ import Image, { type ImageProps } from 'next/image'
 import Link from 'next/link'
 
 import { Container } from '@/components/Container'
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/shadcn/accordion'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import { Stack, TechLayer } from '@/components/Stack'
 import logoBdoUsa from '@/images/logos/bdo-usa.svg'
@@ -79,7 +85,16 @@ const technologies: TechLayer[] = [
   },
   {
     layer: 'Languages',
-    technologies: ['C#', 'TypeScript', 'Python', 'HTML', 'CSS', 'SQL', 'XAML', 'VB'],
+    technologies: [
+      'C#',
+      'TypeScript',
+      'Python',
+      'HTML',
+      'CSS',
+      'SQL',
+      'XAML',
+      'VB',
+    ],
   },
   {
     layer: 'Cloud Providers',
@@ -158,7 +173,7 @@ function Resume() {
   ]
 
   return (
-    <div className="rounded-2xl border border-zinc-100 p-6 dark:border-zinc-700/40">
+    <div>
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">
         <BriefcaseIcon className="h-6 w-6 flex-none" />
         <span className="ml-3">Work</span>
@@ -204,6 +219,71 @@ function Photos() {
   )
 }
 
+function FAQ() {
+  return (
+    <Accordion type="single" collapsible className="w-full">
+      <AccordionItem value="item-1">
+        <AccordionTrigger>
+          What technologies do you specialize in?
+        </AccordionTrigger>
+        <AccordionContent>
+          <div className="space-y-3">
+            <p>
+              All things Microsoft: .NET (C#, VB, XAML, Web apps, Windows apps,
+              Office add-ins), SQL Server, PowerShell, and Azure (cloud
+              infrastructure, DevOps, Pipelines).
+            </p>
+            <p>
+              I&apos;m also familiar with Python, although it&apos;s been a few
+              years since I&apos;ve worked with it extensively.
+            </p>
+          </div>
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Do you work on side projects?</AccordionTrigger>
+        <AccordionContent>
+          Yes, absolutely! I love working on side projects. My chosen stack is
+          Next.js + React, TypeScript, Tailwind CSS, Prisma ORM, Neon Postgres,
+          and Vercel. I&apos;ve worked on many different side projects that you
+          can check out on my{' '}
+          <Link href="/projects" className="underline underline-offset-4">
+            Projects
+          </Link>{' '}
+          page.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
+        <AccordionTrigger>
+          What technologies would you like to work with?
+        </AccordionTrigger>
+        <AccordionContent>
+          I&apos;d like to continue working with .NET and Next.js + React.
+          I&apos;d like to start working more with Python again, specifically
+          learning one of the common backend frameworks like Django or FastAPI.
+          I&apos;m also curious to learn a low-level programming language like
+          C++ or Rust.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-4">
+        <AccordionTrigger>How can I get in touch?</AccordionTrigger>
+        <AccordionContent>
+          The best way is to message me on{' '}
+          <a
+            href="https://www.linkedin.com/in/sam-spoerl/"
+            target="_blank"
+            className="underline underline-offset-4"
+          >
+            LinkedIn
+          </a>
+          . I&apos;m always open to connecting, so don&apos;t hesitate to reach
+          out and say hello!
+        </AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+
 export default async function Home() {
   return (
     <>
@@ -231,12 +311,15 @@ export default async function Home() {
       </Container>
       <Photos />
       <Container className="mt-24 md:mt-28">
-        <div className="mx-auto grid max-w-xl grid-cols-1 gap-y-20 lg:max-w-none lg:grid-cols-2">
-          <div className="space-y-10 rounded-2xl border border-zinc-100 p-6 lg:pl-16 xl:pl-24 dark:border-zinc-700/40">
+        <div className="mx-auto grid max-w-xl grid-cols-1 gap-12 lg:max-w-none lg:grid-cols-2 lg:gap-16">
+          <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 py-6 lg:px-10 dark:border-zinc-700/40">
             <Stack layers={technologies} title="Technologies" />
           </div>
-          <div className="space-y-10 lg:pl-16 xl:pl-24">
+          <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 py-6 lg:px-10 dark:border-zinc-700/40">
             <Resume />
+          </div>
+          <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 pb-6 pt-4 lg:col-span-2 lg:px-10 dark:border-zinc-700/40">
+            <FAQ />
           </div>
         </div>
       </Container>
