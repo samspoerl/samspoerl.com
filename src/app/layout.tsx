@@ -1,6 +1,6 @@
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/Layout'
-import { getSiteDescription } from '@/lib/utils'
+import { getSiteDescription } from '@/lib/site-description'
 import { Analytics } from '@vercel/analytics/react'
 import { type Metadata } from 'next'
 import './globals.css'
