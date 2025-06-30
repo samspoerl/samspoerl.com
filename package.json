@@ -1,6 +1,6 @@
 {
   "name": "samspoerl.com",
-  "version": "1.1.1",
+  "version": "1.2.1",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -11,7 +11,6 @@
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "@heroicons/react": "^2.2.0",
     "@radix-ui/react-accordion": "^1.2.11",
     "@tailwindcss/typography": "^0.5.15",
     "@vercel/analytics": "^1.4.1",
