@@ -11,7 +11,7 @@
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
     "@headlessui/react": "^2.2.0",
-    "@radix-ui/react-accordion": "^1.2.11",
+    "@radix-ui/react-accordion": "^1.2.12",
     "@tailwindcss/typography": "^0.5.15",
     "@vercel/analytics": "^1.6.1",
     "@vercel/edge-config": "^1.4.0",
