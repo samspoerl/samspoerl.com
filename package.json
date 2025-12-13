@@ -14,7 +14,7 @@
     "@radix-ui/react-accordion": "^1.2.12",
     "@tailwindcss/typography": "^0.5.15",
     "@vercel/analytics": "^1.6.1",
-    "@vercel/edge-config": "^1.4.0",
+    "@vercel/edge-config": "^1.4.3",
     "autoprefixer": "^10.4.22",
     "cheerio": "^1.0.0",
     "clsx": "^2.1.1",
