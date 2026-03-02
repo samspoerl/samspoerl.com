@@ -8,6 +8,9 @@
     "start": "next start",
     "lint": "eslint ."
   },
+  "engines": {
+    "node": ">=20"
+  },
   "browserslist": "defaults, not ie <= 11",
   "dependencies": {
     "@headlessui/react": "^2.2.9",
