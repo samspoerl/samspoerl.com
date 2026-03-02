@@ -22,7 +22,7 @@ export default function Icon() {
           alignItems: 'center',
           justifyContent: 'center',
           color: 'white',
-          borderRadius: '50%',
+          borderRadius: '25%',
         }}
       >
         SS
