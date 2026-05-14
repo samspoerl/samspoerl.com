@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "schedule:weekly"
+  ],
+  "schedule": ["* 0-6 * * 1"],
+  "prCreation": "not-pending",
+  "minimumReleaseAge": "3 days",
+  "packageRules": [
+    {
+      "description": "Only allow minor and patch updates; disable major updates",
+      "matchUpdateTypes": ["major"],
+      "enabled": false
+    },
+    {
+      "description": "Group all minor/patch updates into a single weekly PR and automerge once CI passes",
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "all minor and patch updates",
+      "schedule": ["* 0-6 * * 1"],
+      "automerge": true
+    }
+  ],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "schedule": ["at any time"],
+    "minimumReleaseAge": "1 day",
+    "prPriority": 10,
+    "automerge": true
+  },
+  "osvVulnerabilityAlerts": true
+}
