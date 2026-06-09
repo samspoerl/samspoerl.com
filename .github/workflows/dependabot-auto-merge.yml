@@ -1,0 +1,11 @@
+name: Dependabot scheduled auto-merge
+
+on: pull_request
+
+jobs:
+  auto-merge:
+    uses: samspoerl/workflows/.github/workflows/dependabot-auto-merge.yml@main
+    secrets: inherit
+    permissions:
+      contents: write
+      pull-requests: write
