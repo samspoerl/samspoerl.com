@@ -1,28 +1,31 @@
+import { absoluteUrl } from '@/lib/site-url'
 import type { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const lastModified = new Date()
+
   return [
     {
-      url: 'https://samspoerl.com',
-      lastModified: new Date(),
+      url: absoluteUrl('/'),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 1,
     },
     {
-      url: 'https://samspoerl.com/about',
-      lastModified: new Date(),
+      url: absoluteUrl('/about'),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.7,
     },
     {
-      url: 'https://samspoerl.com/projects',
-      lastModified: new Date(),
+      url: absoluteUrl('/projects'),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.8,
     },
     {
-      url: 'https://samspoerl.com/carve-outs',
-      lastModified: new Date(),
+      url: absoluteUrl('/carve-outs'),
+      lastModified,
       changeFrequency: 'monthly',
       priority: 0.2,
     },
