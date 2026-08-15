@@ -1,15 +1,24 @@
 // Utility function to get dynamic years experience.
+//
+// Read in UTC throughout. A date-only string like '2018-09-01' parses as UTC
+// midnight, so reading it back with the local-time accessors lands on Aug 31
+// anywhere behind UTC — which shifted the anniversary a month early and made
+// the answer depend on the runner's time zone. UTC is also the honest zone to
+// count in: the pages that use this are prerendered once at build time, so
+// there is no reader's local time for it to mean anything relative to.
 export function getYearsExperience(): string {
   const startDate = new Date('2018-09-01')
   const currentDate = new Date()
-  const startYear = startDate.getFullYear()
-  const currentYear = currentDate.getFullYear()
-  const startMonth = startDate.getMonth()
-  const currentMonth = currentDate.getMonth()
+  const startYear = startDate.getUTCFullYear()
+  const currentYear = currentDate.getUTCFullYear()
+  const startMonth = startDate.getUTCMonth()
+  const currentMonth = currentDate.getUTCMonth()
 
   let yearsExperience = currentYear - startYear
 
-  // Must decrement if a full year hasn't accrued.
+  // Must decrement if a full year hasn't accrued. Comparing months alone is
+  // enough only because the start date is the 1st; a mid-month start would
+  // need the day compared too.
   if (currentMonth < startMonth) {
     yearsExperience--
   }

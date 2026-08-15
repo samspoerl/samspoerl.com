@@ -136,17 +136,19 @@ Both libraries ship unstyled, so they cost nothing in traceability — every cla
 
 ## Tests
 
-**There is no test setup in this repo yet** — no test runner, no `test` script, no `test/` directory. Don't write tests against infrastructure that doesn't exist, and don't claim a change is "tested" because `next build` succeeded.
+**Unit tests only, via Vitest** — `pnpm test` (and `pnpm test:watch`), configured in `vitest.config.mts` in a node environment. There is no component or E2E setup yet, so don't write tests against infrastructure that doesn't exist, and don't claim a change is "tested" because `next build` succeeded.
 
-What does exist is `.github/workflows/ci.yml`, which runs on every PR and on pushes to main. `pnpm check` runs the same three checks locally — `format:check`, `typecheck`, `lint` — so a green local run means a green CI run. Two things about it are worth knowing before you edit it:
+`.github/workflows/ci.yml` runs on every PR and on pushes to main. `pnpm check` runs the same four checks locally — `format:check`, `typecheck`, `test`, `lint` — so a green local run means a green CI run. Two things about it are worth knowing before you edit it:
 
 - **The `format` job is separate only to scope `contents: write`.** On a PR that isn't Dependabot's it runs `pnpm format` and pushes the fix rather than failing, since a red X over a quote style costs a round trip and nothing else. A push made with `GITHUB_TOKEN` starts no further workflow run, so the checks on a PR stay attached to the commit that was reviewed. Everything else stays read-only, which is the point of the split.
 - **`checks` runs `next typegen` before `tsc`.** `next-env.d.ts` is gitignored and only written by `next dev` / `next build`, and it carries the module declarations for the `@/images/*` static imports — without it `tsc` fails with nine `TS2307`s that have nothing to do with the change under review. The `format` job deliberately doesn't need this step; prettier's output is byte-identical with and without the generated types.
 
-When tests are added they belong in the `checks` job, between typecheck and lint. The split should be by **what a test needs in order to run**, since that's what decides its config, its command, and its CI job:
+Tests run in the `checks` job, between typecheck and lint. The split is by **what a test needs in order to run**, since that's what decides its config, its command, and its CI job:
 
-- **Unit** — pure functions, which here means `lib/site-description.ts` (`getYearsExperience` has real edge cases around the month boundary) and anything that joins it in `lib/`. No mocks, no request context, no network. Vitest in a node environment is the obvious fit given the rest of the stack.
-- **Component/E2E** — the site's actual risk is visual and navigational: the header's scroll math, the theme toggle surviving hydration, the four routes rendering. That's Playwright territory rather than jsdom, and the Playwright MCP server is already configured in `.mcp.json`.
+- **Unit** — pure functions, which today means `lib/site-description.ts` and anything that joins it in `lib/`. No mocks, no request context, no network.
+- **Component/E2E** — not set up. The site's actual risk is visual and navigational: the header's scroll math, the theme toggle surviving hydration, the four routes rendering. That's Playwright territory rather than jsdom, and the Playwright MCP server is already configured in `.mcp.json`.
+
+**Pin the clock and the time zone together** in anything that reads a date. `getYearsExperience` had a bug where a UTC-parsed date was read back with local-time accessors, so the answer was a year too high anywhere behind UTC — and invisible in CI and on Vercel, which both run UTC. The tests set `process.env.TZ` per case for exactly that reason; don't collapse them to a single zone, and don't pin the suite to UTC globally, or that whole class of bug stops being observable.
 
 Specs should mirror the `src/` path of what they cover — `src/lib/site-description.ts` → `test/unit/lib/site-description.test.ts`.
 

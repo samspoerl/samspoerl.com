@@ -1,10 +1,9 @@
 name: CI
 
-# Catches regressions before they reach main: prettier, `tsc --noEmit`, and
-# eslint. There is no test suite in this repo yet; when one lands it belongs in
-# the checks job below. The production build is Vercel's job, so it doesn't run
-# here — the Preview deployment is what dependabot-auto-merge.yml already gates
-# on. `pnpm check` runs the same checks locally.
+# Catches regressions before they reach main: prettier, `tsc --noEmit`, vitest,
+# and eslint. The production build is Vercel's job, so it doesn't run here — the
+# Preview deployment is what dependabot-auto-merge.yml already gates on. `pnpm
+# check` runs the same checks locally.
 on:
   pull_request:
   # Branch work is already checked on its PR, so the push trigger covers only
@@ -135,6 +134,13 @@ jobs:
       # be wrong.
       - name: Type check
         run: pnpm typecheck
+
+      # Deliberately not pinned to a time zone. The runner is UTC, which is the
+      # one zone where site-description's UTC-parse/local-read mismatch used to
+      # cancel out — the tests that cover it set TZ per case instead, so they
+      # fail here if that bug comes back.
+      - name: Test
+        run: pnpm test
 
       - name: Lint
         run: pnpm lint
