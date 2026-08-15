@@ -1,0 +1,140 @@
+name: CI
+
+# Catches regressions before they reach main: prettier, `tsc --noEmit`, and
+# eslint. There is no test suite in this repo yet; when one lands it belongs in
+# the checks job below. The production build is Vercel's job, so it doesn't run
+# here — the Preview deployment is what dependabot-auto-merge.yml already gates
+# on. `pnpm check` runs the same checks locally.
+on:
+  pull_request:
+  # Branch work is already checked on its PR, so the push trigger covers only
+  # main — the merge commit, or a direct push. Without the branch filter every
+  # PR commit would be checked twice, once per event.
+  push:
+    branches: [main]
+
+# One in-flight run per branch. A superseded PR run is cancelled since its result
+# is already stale; runs on main are left to finish.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# Read-only by default. Only the formatting job opts into write, so a malicious
+# postinstall script or dependency can't reach a push-capable token from the job
+# that installs and runs the checks.
+permissions:
+  contents: read
+
+jobs:
+  # Split from the checks below purely to scope `contents: write` as narrowly as
+  # possible. The two jobs run on separate runners in parallel — nothing is
+  # shared but the pnpm store that `cache: pnpm` restores — so this costs one
+  # duplicated install, not wall-clock time.
+  format:
+    name: Format
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+
+    env:
+      # Whether this run fixes formatting or just checks it. Only a PR branch
+      # gets a fix commit — main is never auto-committed to, and Dependabot PRs
+      # run with a read-only GITHUB_TOKEN, so a push there would only fail.
+      FIX_FORMATTING: ${{ github.event_name == 'pull_request' && github.actor != 'dependabot[bot]' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          # A pull_request run checks out a detached merge commit, which has
+          # nowhere to push. Name the head branch so a fix lands on the PR; on a
+          # push to main `ref_name` is already `main`.
+          ref: ${{ github.head_ref || github.ref_name }}
+
+      # No `version` input — the action reads it from `packageManager` in
+      # package.json, which is where the pinned pnpm version already lives.
+      # This must precede setup-node, which needs pnpm on PATH for `cache: pnpm`.
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # No `next typegen` step here, unlike the checks job. prettier's
+      # organize-imports plugin drives the TypeScript language service, so the
+      # gitignored generated types look like they'd matter — but they don't:
+      # removing next-env.d.ts leaves prettier's output byte-identical, because
+      # the plugin only sorts within blank-line-separated groups and never drops
+      # the `@/images/*` imports whose module declarations go missing.
+      - name: Format
+        if: env.FIX_FORMATTING == 'true'
+        run: pnpm format
+
+      # Push the fix instead of failing the build: formatting is mechanical, and
+      # a red X over a quote style only costs a round trip. A push made with
+      # GITHUB_TOKEN deliberately starts no further workflow run, so the checks
+      # on a PR stay attached to the commit that was actually reviewed.
+      - name: Commit formatting fixes
+        if: env.FIX_FORMATTING == 'true'
+        run: |
+          if git diff --quiet; then
+            echo 'Already formatted.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit --all --message 'style: apply prettier formatting'
+          git push
+
+      - name: Check formatting
+        if: env.FIX_FORMATTING != 'true'
+        run: pnpm format:check
+
+  checks:
+    name: Checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      # No `ref` — unlike the formatting job this one has nothing to push, so it
+      # takes the default: a PR's merge commit, which is what main will actually
+      # end up with.
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # next-env.d.ts is gitignored and only written by `next dev` / `next
+      # build`, neither of which runs here. It carries the module declarations
+      # for the static image imports, so without this step tsc fails with nine
+      # TS2307s on `@/images/*`. `typegen` is the cheap way to get it — it also
+      # writes the route types, and skips the actual build.
+      - name: Generate Next.js types
+        run: pnpm exec next typegen
+
+      # Ordered so the fastest, most fundamental failure surfaces first: a step
+      # failure ends the job, so time-to-red is the ordering criterion. tsc is
+      # the quicker of the two here, and a type error is the more basic thing to
+      # be wrong.
+      - name: Type check
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
