@@ -36,7 +36,7 @@ The one setting it holds is `allowBuilds`. pnpm refuses to run a dependency's in
 
 ### Vercel needs Corepack turned on, and that setting isn't in this repo
 
-Vercel detects *pnpm* from `pnpm-lock.yaml`, but it does **not** read `packageManager` by default — it infers a version from `lockfileVersion`, and `9.0` maps to "pnpm 9 or 10, older projects prefer 9." This project is old enough to get 9, and its native support stops at 10, so no amount of pinning in `package.json` reaches pnpm 11 on its own.
+Vercel detects _pnpm_ from `pnpm-lock.yaml`, but it does **not** read `packageManager` by default — it infers a version from `lockfileVersion`, and `9.0` maps to "pnpm 9 or 10, older projects prefer 9." This project is old enough to get 9, and its native support stops at 10, so no amount of pinning in `package.json` reaches pnpm 11 on its own.
 
 The bridge is Corepack, enabled by an environment variable on the Vercel project itself: `ENABLE_EXPERIMENTAL_COREPACK=1`. With it, Vercel honors `packageManager` and local and CI run the same pnpm. Without it, the build fails at install with `ERROR packages field missing or empty` — pnpm 9 reading `pnpm-workspace.yaml` as a real workspace declaration and finding no `packages` key. That error names the wrong thing; adding a `packages` key is not the fix.
 
