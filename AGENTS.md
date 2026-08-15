@@ -191,9 +191,15 @@ Use **Conventional Commits** (<https://www.conventionalcommits.org>) for all com
 - GitHub soft-wraps prose to the reader's width, so a hard wrap doesn't change what renders — it only breaks the source a human reads and edits, and re-flows into a ragged mess the moment a sentence is changed.
 - This is the opposite of the commit-message convention above, and deliberately so: a commit message is read by `git log` in a terminal that won't wrap it for you. Wrap those, not these.
 
-**Dependabot** opens the majority of PRs here, and `.github/workflows/dependabot-auto-merge.yml` merges them on a daily schedule — but only same-major bumps (with `0.x` minor bumps treated as breaking) whose Vercel Preview deployment reported `success`. Major bumps are left open on purpose and are yours to review. Don't hand-merge a Dependabot PR whose preview hasn't gone green just because the diff looks small.
+**Dependabot** opens the majority of PRs here, and `.github/workflows/dependabot-auto-merge.yml` merges them on a daily schedule. A PR has to clear three gates: no major or breaking bump (a `0.x` minor counts as breaking), every job of the `CI` workflow green, and a Vercel Preview deployment reporting `success`. Major bumps are left open on purpose and are yours to review. Don't hand-merge a Dependabot PR that hasn't gone green just because the diff looks small.
 
-Note that the auto-merge gate still checks **only** the Vercel Preview deployment — it predates `ci.yml` and doesn't look at it, so a Dependabot PR can be auto-merged with CI red as long as the preview deployed. Worth closing, but it's a deliberate gap rather than an oversight to fix in passing.
+Three things about that script are load-bearing and easy to undo by accident:
+
+- **Version pairs are read from the PR body, not the title.** A grouped update (the `react` and `next` groups in `dependabot.yml`) titles itself "bump the next group with 2 updates" and states no versions at all, so title parsing skipped those PRs entirely. The body carries one `Bumps`/`Updates ... from A to B` line per member. The match is anchored to the line start so version strings inside the embedded release notes aren't read as bumps, and any line that looks like a bump but won't parse makes the whole PR skip — a silent "no bumps found" must never read as "no major bumps found."
+- **"No CI runs at all" is a distinct verdict from "all CI runs green."** A PR with no CI attached satisfies an all-green rule vacuously, so it gets its own `NO_CI` state and is left open. This is not hypothetical: any Dependabot PR opened before `ci.yml` landed has an empty rollup until Dependabot rebases it.
+- **The job needs `actions: read`**, on top of the `checks` and `statuses` scopes. `gh` resolves a check run's `workflowName` through `checkSuite.workflowRun`, which sits behind that scope. Without it the rollup comes back as partial data plus per-node "Resource not accessible by integration" errors, `gh` treats that as a hard failure, and no PR ever reaches a verdict — the workflow fails open-ended rather than loudly.
+
+Check runs are collapsed to the newest per name before judging, since a re-run adds a second entry under the same name and the stale one must not win. `workflow_dispatch` takes a `dry_run` input defaulting to `true`, which is the way to test a change to any of this: it prints the verdict table to the step summary and merges nothing.
 
 ## GitHub Issue Conventions
 
