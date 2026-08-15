@@ -6,7 +6,8 @@ function Square3Stack3DIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      className="size-6"
+      aria-hidden="true"
+      {...props}
     >
       <path
         strokeLinecap="round"
@@ -38,7 +39,13 @@ function TechLayer({ layer }: { layer: TechLayer }) {
   )
 }
 
-export function Stack({ layers, title }: { layers: TechLayer[], title: string }) {
+export function Stack({
+  layers,
+  title,
+}: {
+  layers: TechLayer[]
+  title: string
+}) {
   return (
     <div>
       <h2 className="flex text-sm font-semibold text-zinc-900 dark:text-zinc-100">

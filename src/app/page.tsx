@@ -44,19 +44,6 @@ function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
   )
 }
 
-function ArrowDownIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 16 16" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M4.75 8.75 8 12.25m0 0 3.25-3.5M8 12.25v-8.5"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
-  )
-}
-
 function SocialLink({
   icon: Icon,
   ...props
@@ -115,17 +102,17 @@ interface Role {
 }
 
 function Role({ role }: { role: Role }) {
-  let startLabel =
+  const startLabel =
     typeof role.start === 'string' ? role.start : role.start.label
-  let startDate =
+  const startDate =
     typeof role.start === 'string' ? role.start : role.start.dateTime
 
-  let endLabel = typeof role.end === 'string' ? role.end : role.end.label
-  let endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
+  const endLabel = typeof role.end === 'string' ? role.end : role.end.label
+  const endDate = typeof role.end === 'string' ? role.end : role.end.dateTime
 
   return (
     <li className="flex gap-4">
-      <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md shadow-zinc-800/5 ring-1 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-300 dark:ring-0">
+      <div className="relative mt-1 flex h-10 w-10 flex-none items-center justify-center rounded-full shadow-md ring-1 shadow-zinc-800/5 ring-zinc-900/5 dark:border dark:border-zinc-700/50 dark:bg-zinc-300 dark:ring-0">
         <Image src={role.logo} alt="" className="h-7 w-7" unoptimized />
       </div>
       <dl className="flex flex-auto flex-wrap gap-x-2">
@@ -152,7 +139,7 @@ function Role({ role }: { role: Role }) {
 }
 
 function Resume() {
-  let resume: Role[] = [
+  const resume: Role[] = [
     {
       company: 'BDO USA',
       title: 'TAS Data Analytics',
@@ -183,17 +170,18 @@ function Resume() {
           <Role key={roleIndex} role={role} />
         ))}
       </ol>
-      {/* TODO: Potentially add later with an updated resume */}
-      {/* <Button href="#" variant="secondary" className="group mt-6 w-full">
-        Download CV
-        <ArrowDownIcon className="h-4 w-4 stroke-zinc-400 transition group-active:stroke-zinc-600 dark:group-hover:stroke-zinc-50 dark:group-active:stroke-zinc-50" />
-      </Button> */}
     </div>
   )
 }
 
 function Photos() {
-  let rotations = ['rotate-2', '-rotate-2', 'rotate-2', 'rotate-2', '-rotate-2']
+  const rotations = [
+    'rotate-2',
+    '-rotate-2',
+    'rotate-2',
+    'rotate-2',
+    '-rotate-2',
+  ]
 
   return (
     <div className="mt-16 sm:mt-20">
@@ -318,7 +306,7 @@ export default async function Home() {
           <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 py-6 lg:px-10 dark:border-zinc-700/40">
             <Resume />
           </div>
-          <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 pb-6 pt-4 lg:col-span-2 lg:px-10 dark:border-zinc-700/40">
+          <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 pt-4 pb-6 lg:col-span-2 lg:px-10 dark:border-zinc-700/40">
             <FAQ />
           </div>
         </div>
