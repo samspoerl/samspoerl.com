@@ -1,4 +1,6 @@
 # Must specify package ecosystem ("npm") and package manifest location ("/").
+# "npm" is Dependabot's name for the whole JavaScript ecosystem — it covers this
+# repo's pnpm-lock.yaml too, and there is no "pnpm" value to switch to.
 # The rest is optional. See documentation for all configuration options:
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
