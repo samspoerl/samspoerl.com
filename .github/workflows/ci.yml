@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: Lint and typecheck
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      # Must precede setup-node: `cache: pnpm` needs pnpm already on PATH to
+      # locate the store. Corepack is also what makes CI honor the
+      # `packageManager` pin — same reason ENABLE_EXPERIMENTAL_COREPACK is set
+      # on the Vercel project. See AGENTS.md.
+      - name: Enable Corepack
+        run: corepack enable
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      # Runs even if lint failed — a red build should report every problem in
+      # one pass rather than making you fix and re-push to find the next one.
+      - name: Typecheck
+        if: '!cancelled()'
+        run: pnpm typecheck
