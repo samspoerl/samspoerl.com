@@ -98,8 +98,9 @@ Two exceptions:
 
 ### Environment variables
 
-- `EDGE_CONFIG` — connection string for the projects list. Without it, `/projects` renders empty.
-- `NEXT_PUBLIC_SITE_URL` — present in `.env.example` and `.env.local` but **not read anywhere in `src/`**.
+- `EDGE_CONFIG` — connection string for the projects list. Without it, `/projects` renders empty. This is the only one.
+
+The site's own domain is deliberately **not** an env var. It lives in `lib/site-url.ts` as `SITE_URL`, which feeds `metadataBase` and the canonical tag in the root layout, plus `sitemap.ts` and `robots.ts` via `absoluteUrl()`. Making it configurable would mean a preview deployment advertising its own `*.vercel.app` origin as canonical, which invites duplicate-content indexing; every deployment pointing at production is the behavior worth having. Change the domain in that one file.
 
 ## Components
 

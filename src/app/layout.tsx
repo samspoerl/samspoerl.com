@@ -1,17 +1,28 @@
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/Layout'
 import { getSiteDescription } from '@/lib/site-description'
+import { SITE_URL } from '@/lib/site-url'
 import { Analytics } from '@vercel/analytics/react'
 import { type Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  // Without this, Next resolves og:image against VERCEL_PROJECT_PRODUCTION_URL
+  // in production and localhost in a local build — right by accident on the
+  // deployed site, wrong everywhere else.
+  metadataBase: SITE_URL,
   title: {
     template: '%s - Sam Spoerl',
     default: 'Sam Spoerl',
   },
   description: getSiteDescription(),
   keywords: ['sam spoerl', 'samspoerl', 'samuel spoerl', 'spoerl'],
+  alternates: {
+    // './' resolves against the current route's pathname, so this one
+    // declaration gives every page its own canonical rather than pointing them
+    // all at the home page. A preview deployment canonicals to production.
+    canonical: './',
+  },
 }
 
 export default function RootLayout({
