@@ -1,0 +1,17 @@
+# Prettier 3 already reads .gitignore, so the build-output and dependency
+# entries below are redundant with it. Kept as documentation of intent — the
+# one entry doing real work is the lockfile, which is tracked and generated.
+
+# Dependencies
+node_modules/
+
+# Build output
+out/
+build/
+.next/
+
+# Coverage
+coverage/
+
+# Lockfiles — generated, and reformatting one is churn at best
+pnpm-lock.yaml

@@ -30,7 +30,7 @@ export function ProjectCard({ project }: { project: Project }) {
         </a>
       )}
       <StatusTracker currentStatus={project.status} />
-      <p className="text-pretty text-sm text-zinc-600 dark:text-zinc-400">
+      <p className="text-sm text-pretty text-zinc-600 dark:text-zinc-400">
         {project.description}
       </p>
       <div className="mt-4 flex grow flex-row items-end justify-between gap-4">

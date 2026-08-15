@@ -16,7 +16,7 @@ export function StatusTracker({
     <div className="mb-6 flex max-w-md flex-col gap-1 p-4">
       <div className="relative flex flex-row items-center justify-between">
         {/* Base track line - positioned to go through dot centers */}
-        <div className="absolute left-0 right-0 h-0.5 bg-zinc-500"></div>
+        <div className="absolute right-0 left-0 h-0.5 bg-zinc-500"></div>
 
         {/* Progress line - positioned to go through dot centers */}
         <div
