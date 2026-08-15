@@ -82,6 +82,7 @@ tailwind.config.ts       # Tailwind v4 config, bridged from globals.css via @con
 typography.ts            # prose styles consumed by tailwind.config.ts
 .github/
   dependabot.yml
+  workflows/ci.yml                      # format, typecheck, lint — see Tests
   workflows/dependabot-auto-merge.yml
 ```
 
@@ -138,7 +139,12 @@ Both libraries ship unstyled, so they cost nothing in traceability — every cla
 
 **There is no test setup in this repo yet** — no test runner, no `test` script, no `test/` directory. Don't write tests against infrastructure that doesn't exist, and don't claim a change is "tested" because `next build` succeeded.
 
-When tests are added, the split should be by **what a test needs in order to run**, since that's what decides its config, its command, and its CI job:
+What does exist is `.github/workflows/ci.yml`, which runs on every PR and on pushes to main. `pnpm check` runs the same three checks locally — `format:check`, `typecheck`, `lint` — so a green local run means a green CI run. Two things about it are worth knowing before you edit it:
+
+- **The `format` job is separate only to scope `contents: write`.** On a PR that isn't Dependabot's it runs `pnpm format` and pushes the fix rather than failing, since a red X over a quote style costs a round trip and nothing else. A push made with `GITHUB_TOKEN` starts no further workflow run, so the checks on a PR stay attached to the commit that was reviewed. Everything else stays read-only, which is the point of the split.
+- **`checks` runs `next typegen` before `tsc`.** `next-env.d.ts` is gitignored and only written by `next dev` / `next build`, and it carries the module declarations for the `@/images/*` static imports — without it `tsc` fails with nine `TS2307`s that have nothing to do with the change under review. The `format` job deliberately doesn't need this step; prettier's output is byte-identical with and without the generated types.
+
+When tests are added they belong in the `checks` job, between typecheck and lint. The split should be by **what a test needs in order to run**, since that's what decides its config, its command, and its CI job:
 
 - **Unit** — pure functions, which here means `lib/site-description.ts` (`getYearsExperience` has real edge cases around the month boundary) and anything that joins it in `lib/`. No mocks, no request context, no network. Vitest in a node environment is the obvious fit given the rest of the stack.
 - **Component/E2E** — the site's actual risk is visual and navigational: the header's scroll math, the theme toggle surviving hydration, the four routes rendering. That's Playwright territory rather than jsdom, and the Playwright MCP server is already configured in `.mcp.json`.
@@ -185,7 +191,9 @@ Use **Conventional Commits** (<https://www.conventionalcommits.org>) for all com
 - GitHub soft-wraps prose to the reader's width, so a hard wrap doesn't change what renders — it only breaks the source a human reads and edits, and re-flows into a ragged mess the moment a sentence is changed.
 - This is the opposite of the commit-message convention above, and deliberately so: a commit message is read by `git log` in a terminal that won't wrap it for you. Wrap those, not these.
 
-**Dependabot** opens the majority of PRs here, and `.github/workflows/dependabot-auto-merge.yml` merges them on a daily schedule — but only same-major bumps (with `0.x` minor bumps treated as breaking) whose Vercel Preview deployment reported `success`. Major bumps are left open on purpose and are yours to review. Don't hand-merge a Dependabot PR whose preview hasn't gone green just because the diff looks small; the preview deploy is the only check this repo has.
+**Dependabot** opens the majority of PRs here, and `.github/workflows/dependabot-auto-merge.yml` merges them on a daily schedule — but only same-major bumps (with `0.x` minor bumps treated as breaking) whose Vercel Preview deployment reported `success`. Major bumps are left open on purpose and are yours to review. Don't hand-merge a Dependabot PR whose preview hasn't gone green just because the diff looks small.
+
+Note that the auto-merge gate still checks **only** the Vercel Preview deployment — it predates `ci.yml` and doesn't look at it, so a Dependabot PR can be auto-merged with CI red as long as the preview deployed. Worth closing, but it's a deliberate gap rather than an oversight to fix in passing.
 
 ## GitHub Issue Conventions
 

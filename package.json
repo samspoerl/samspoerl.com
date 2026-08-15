@@ -8,8 +8,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint --max-warnings=0 .",
+    "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "check": "pnpm format:check && pnpm typecheck && pnpm lint"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.10",
