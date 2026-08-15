@@ -1,0 +1,8 @@
+# Not a workspace — this is where pnpm 11 reads its settings from. They used to
+# live in package.json under a "pnpm" key, which pnpm now ignores.
+
+# pnpm refuses to run a dependency's install scripts unless it's allowed here.
+# unrs-resolver (pulled in by eslint-config-next) needs one to link its native
+# binary; without it, `pnpm lint` can't resolve imports.
+allowBuilds:
+  unrs-resolver: true

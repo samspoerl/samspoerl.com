@@ -20,13 +20,27 @@ That shape is the main thing to keep in mind when changing it. Reach for a clien
 
 - **Framework:** Next.js 16 (App Router) with React 19 — no React Compiler, `next.config.ts` is empty
 - **Language:** TypeScript (strict), `@/*` → `./src/*`
-- **Package manager:** npm (`package-lock.json`)
+- **Package manager:** pnpm (`pnpm-lock.yaml`), pinned via `packageManager` in `package.json`
 - **Styling:** Tailwind CSS v4 with `@tailwindcss/typography`; dark mode via `next-themes` on the `class` strategy
 - **Behavior primitives:** Headless UI (the mobile nav `Popover`) and Radix (`@radix-ui/react-accordion`, wrapped shadcn-style)
 - **Icons:** lucide-react, plus hand-inlined SVGs from the template
 - **Class merging:** `clsx` and `tailwind-merge`
 - **Hosting/platform:** Vercel — `@vercel/analytics` for pageviews, `@vercel/edge-config` for the projects list
 - **Images:** `next/image` with `sharp`
+
+### pnpm, and where its settings live
+
+`pnpm-workspace.yaml` at the root is **not** a monorepo declaration — it has no `packages` key and this is a single package. It's there because pnpm 11 no longer reads its settings from a `"pnpm"` key in `package.json`; that file is the only place they're honored now.
+
+The one setting it holds is `allowBuilds`. pnpm refuses to run a dependency's install scripts unless it's listed there, so a package that links a native binary during install silently doesn't, and fails later at a confusing distance from the cause. Today that's `unrs-resolver` (pulled in by `eslint-config-next`). If an install prints `ERR_PNPM_IGNORED_BUILDS`, the fix is to add the named package there — after checking it actually needs a build script — rather than to run `pnpm approve-builds`, which writes the same file but leaves the reasoning out of the diff.
+
+### Vercel needs Corepack turned on, and that setting isn't in this repo
+
+Vercel detects *pnpm* from `pnpm-lock.yaml`, but it does **not** read `packageManager` by default — it infers a version from `lockfileVersion`, and `9.0` maps to "pnpm 9 or 10, older projects prefer 9." This project is old enough to get 9, and its native support stops at 10, so no amount of pinning in `package.json` reaches pnpm 11 on its own.
+
+The bridge is Corepack, enabled by an environment variable on the Vercel project itself: `ENABLE_EXPERIMENTAL_COREPACK=1`. With it, Vercel honors `packageManager` and local and CI run the same pnpm. Without it, the build fails at install with `ERROR packages field missing or empty` — pnpm 9 reading `pnpm-workspace.yaml` as a real workspace declaration and finding no `packages` key. That error names the wrong thing; adding a `packages` key is not the fix.
+
+This is the one piece of the build that lives outside the repo, so nothing here will tell you it's missing. If a fresh Vercel project (or a fork) fails on install with that error, this is why. It has to be set in the dashboard or via `vercel env add` — `vercel.json` can't carry it.
 
 ### Tailwind v4, configured the v3 way
 
@@ -136,7 +150,7 @@ The presentational components stay out of unit tests: testing them means mocking
 ## Code Style
 
 - **Prettier:** `semi: false`, `singleQuote: true`, `printWidth: 80`, `trailingComma: 'es5'`; `tailwindFunctions: ['clsx', 'tw']`; imports auto-organized via `prettier-plugin-organize-imports`, classes sorted via `prettier-plugin-tailwindcss`
-- **Lint:** `npm run lint` — flat config extending `eslint-config-next` (core-web-vitals + typescript) with `eslint-config-prettier` last
+- **Lint:** `pnpm lint` — flat config extending `eslint-config-next` (core-web-vitals + typescript) with `eslint-config-prettier` last
 - **Imports:** the `@/*` alias, not relative paths that climb out of a directory
 - **Class merging:** `cn()` from `@/lib/utils` when classes come from props and could conflict; plain `clsx` when they're just being composed. Both are in use and both are correct — `cn()` is `twMerge(clsx(...))`, so use it where a later class needs to actually win.
 - **`let` vs `const`:** the template's components declare locals with `let` (`let Component = as ?? 'div'`). Newer code here uses `const`. Match the file you're editing rather than converting one to the other in passing; a whitespace-scale diff across template files buries the change you actually made.
