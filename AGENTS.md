@@ -34,7 +34,13 @@ That shape is the main thing to keep in mind when changing it. Reach for a clien
 
 The one setting it holds is `allowBuilds`. pnpm refuses to run a dependency's install scripts unless it's listed there, so a package that links a native binary during install silently doesn't, and fails later at a confusing distance from the cause. Today that's `unrs-resolver` (pulled in by `eslint-config-next`). If an install prints `ERR_PNPM_IGNORED_BUILDS`, the fix is to add the named package there — after checking it actually needs a build script — rather than to run `pnpm approve-builds`, which writes the same file but leaves the reasoning out of the diff.
 
-Vercel picks pnpm up from `pnpm-lock.yaml` and the `packageManager` field on its own; there's no build-command override to keep in sync.
+### Vercel needs Corepack turned on, and that setting isn't in this repo
+
+Vercel detects *pnpm* from `pnpm-lock.yaml`, but it does **not** read `packageManager` by default — it infers a version from `lockfileVersion`, and `9.0` maps to "pnpm 9 or 10, older projects prefer 9." This project is old enough to get 9, and its native support stops at 10, so no amount of pinning in `package.json` reaches pnpm 11 on its own.
+
+The bridge is Corepack, enabled by an environment variable on the Vercel project itself: `ENABLE_EXPERIMENTAL_COREPACK=1`. With it, Vercel honors `packageManager` and local and CI run the same pnpm. Without it, the build fails at install with `ERROR packages field missing or empty` — pnpm 9 reading `pnpm-workspace.yaml` as a real workspace declaration and finding no `packages` key. That error names the wrong thing; adding a `packages` key is not the fix.
+
+This is the one piece of the build that lives outside the repo, so nothing here will tell you it's missing. If a fresh Vercel project (or a fork) fails on install with that error, this is why. It has to be set in the dashboard or via `vercel env add` — `vercel.json` can't carry it.
 
 ### Tailwind v4, configured the v3 way
 
