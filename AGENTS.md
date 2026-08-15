@@ -59,7 +59,7 @@ So `tailwind.config.ts` (and `typography.ts` beside it, which holds the `prose` 
 src/
   app/                   # App Router — one directory per route, all Server Components
     layout.tsx           # <html>/<body>, site metadata, Providers, Layout, Analytics
-    providers.tsx        # 'use client' — ThemeProvider + previous-pathname context
+    providers.tsx        # 'use client' — ThemeProvider + system-theme watcher
     page.tsx             # Home: intro, photo strip, tech stack, work history, FAQ
     about/page.tsx
     carve-outs/page.tsx

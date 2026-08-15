@@ -1,7 +1,7 @@
+import clsx from 'clsx'
 import { type Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import clsx from 'clsx'
 
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
@@ -32,21 +32,9 @@ function SocialLink({
   )
 }
 
-function MailIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" {...props}>
-      <path
-        fillRule="evenodd"
-        d="M6 5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3V8a3 3 0 0 0-3-3H6Zm.245 2.187a.75.75 0 0 0-.99 1.126l6.25 5.5a.75.75 0 0 0 .99 0l6.25-5.5a.75.75 0 0 0-.99-1.126L12 12.251 6.245 7.187Z"
-      />
-    </svg>
-  )
-}
-
 export const metadata: Metadata = {
   title: 'About',
-  description:
-    'About Sam Spoerl',
+  description: 'About Sam Spoerl',
 }
 
 export default function About() {
@@ -69,16 +57,16 @@ export default function About() {
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              Hi, my name is Sam Spoerl. I&apos;m a software engineer and I&apos;ve been
-              writing code for over {getYearsExperience()} years.
+              Hi, my name is Sam Spoerl. I&apos;m a software engineer and
+              I&apos;ve been writing code for over {getYearsExperience()} years.
             </p>
 
             <p>
               Like many software developers, I got my start because of some
-              tedious task I didn&apos;t want to do anymore. For me, it was a report
-              that required a lot of manual parsing through data in a home-grown
-              ERP system. I then spent an entire summer learning SQL in my free
-              time to automate that report.
+              tedious task I didn&apos;t want to do anymore. For me, it was a
+              report that required a lot of manual parsing through data in a
+              home-grown ERP system. I then spent an entire summer learning SQL
+              in my free time to automate that report.
             </p>
 
             <p>
@@ -107,10 +95,11 @@ export default function About() {
             </p>
 
             <p>
-              That began my love affair with coding. Since then, I&apos;ve explored
-              myriad other languages and frameworks, including JavaScript,
-              TypeScript, HTML/CSS, Java, and C#. Recently, I&apos;ve worked mostly
-              with .NET for work and Next.js for my personal projects.
+              That began my love affair with coding. Since then, I&apos;ve
+              explored myriad other languages and frameworks, including
+              JavaScript, TypeScript, HTML/CSS, Java, and C#. Recently,
+              I&apos;ve worked mostly with .NET for work and Next.js for my
+              personal projects.
             </p>
 
             {/* <p>
@@ -126,21 +115,21 @@ export default function About() {
             <p>
               Also, I began focusing in areas such as cloud services, Agile
               methodology, DevOps, and database management. As a member of a
-              small software development team, I&apos;ve had my hand in everything.
-              No language, framework, or technology is off limits. This has not
-              only satisfied my intellectual itch, but made me an all-around
-              better engineer.
+              small software development team, I&apos;ve had my hand in
+              everything. No language, framework, or technology is off limits.
+              This has not only satisfied my intellectual itch, but made me an
+              all-around better engineer.
             </p>
 
             <p>
-              It&apos;s been an unconventional path, but a very rewarding one. I feel
-              like I&apos;ve had to work twice as hard as other developers to catch
-              up and prove myself. The only reason it&apos;s been possible is because
-              I absolutely love it. I find coding addicting. I love solving
-              problems and coding is one big, never-ending problem. Building an
-              app, a feature, or learning a new skill feels like completing a
-              level in Super Mario Bros. I get a little hit of dopamine with
-              every commit.
+              It&apos;s been an unconventional path, but a very rewarding one. I
+              feel like I&apos;ve had to work twice as hard as other developers
+              to catch up and prove myself. The only reason it&apos;s been
+              possible is because I absolutely love it. I find coding addicting.
+              I love solving problems and coding is one big, never-ending
+              problem. Building an app, a feature, or learning a new skill feels
+              like completing a level in Super Mario Bros. I get a little hit of
+              dopamine with every commit.
             </p>
           </div>
         </div>
