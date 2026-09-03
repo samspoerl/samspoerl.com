@@ -6,7 +6,6 @@ import Link from 'next/link'
 import { Container } from '@/components/Container'
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import portraitImage from '@/images/portrait.jpg'
-import { getYearsExperience } from '@/lib/site-description'
 
 function SocialLink({
   className,
@@ -57,8 +56,8 @@ export default function About() {
           </h1>
           <div className="mt-6 space-y-7 text-base text-zinc-600 dark:text-zinc-400">
             <p>
-              Hi, my name is Sam Spoerl. I&apos;m a software engineer and
-              I&apos;ve been writing code for over {getYearsExperience()} years.
+              Hi, my name is Sam Spoerl. I&apos;m a senior software engineer and
+              I&apos;ve been writing code since 2018.
             </p>
 
             <p>
@@ -81,7 +80,7 @@ export default function About() {
               These reports were an immensely manual process. Our data source
               was filled with unclean data, where we needed to understand that
               “PRODUCT” and “prdct” were the same thing. We estimated that it
-              took about 60 hours on average to finish a report for a single
+              took about 40 hours on average to finish a report for a single
               product.
             </p>
 
@@ -102,34 +101,32 @@ export default function About() {
               personal projects.
             </p>
 
-            {/* <p>
-              I don&apos;t have a favorite of the two, and I&apos;d say the choice depends
-              on what I&apos;m building. My company is thorougly integrated into the
-              Microsoft ecosystem, so everything we do is .NET. I think Next.js
-              is a fantastic front-end framework, and in my experience, Python
-              and Node have better third-party support. For example, OpenAI
-              and Plaid, which provide APIs that two of my personal projects
-              consume, have SDKs for Python and Node, but not .NET.
-            </p> */}
-
             <p>
-              Also, I began focusing in areas such as cloud services, Agile
-              methodology, DevOps, and database management. As a member of a
-              small software development team, I&apos;ve had my hand in
-              everything. No language, framework, or technology is off limits.
-              This has not only satisfied my intellectual itch, but made me an
-              all-around better engineer.
+              These days I work in transaction advisory — due diligence and
+              M&amp;A — building automation and internal platforms for the
+              people doing that work, plus the data pipelines and analytics
+              underneath. What keeps it interesting is owning the whole
+              lifecycle: finding the problem by watching how the work actually
+              gets done, building the thing, shipping it, and keeping it
+              running. There&apos;s a symmetry to it I didn&apos;t plan. I
+              studied finance, transitioned into engineering, and wound up
+              building software for the thing I studied in the first place.
             </p>
 
             <p>
-              It&apos;s been an unconventional path, but a very rewarding one. I
-              feel like I&apos;ve had to work twice as hard as other developers
-              to catch up and prove myself. The only reason it&apos;s been
-              possible is because I absolutely love it. I find coding addicting.
-              I love solving problems and coding is one big, never-ending
-              problem. Building an app, a feature, or learning a new skill feels
-              like completing a level in Super Mario Bros. I get a little hit of
-              dopamine with every commit.
+              Owning things end to end has meant getting my hands into
+              everything — cloud infrastructure, Agile process, CI/CD, database
+              design, and agentic development and tool integration. No language,
+              framework, or technology is off limits. That&apos;s satisfied my
+              intellectual itch and made me an all-around better engineer.
+            </p>
+
+            <p>
+              The reason any of it happened is that I love it. I find coding
+              addicting. I love solving problems, and coding is one big,
+              never-ending problem. Building an app, a feature, or learning a
+              new skill feels like completing a level in Super Mario Bros. I get
+              a little hit of dopamine with every commit.
             </p>
           </div>
         </div>
