@@ -18,7 +18,6 @@ import image2 from '@/images/photos/image-2.jpg'
 import image3 from '@/images/photos/image-3.jpg'
 import image4 from '@/images/photos/image-4.jpg'
 import image5 from '@/images/photos/image-5.jpg'
-import { getSiteDescription } from '@/lib/site-description'
 import React from 'react'
 
 function BriefcaseIcon(props: React.ComponentPropsWithoutRef<'svg'>) {
@@ -59,37 +58,36 @@ function SocialLink({
 
 const technologies: TechLayer[] = [
   {
-    layer: 'Front-end',
-    technologies: ['React', 'Next.js', 'Tailwind CSS'],
-  },
-  {
-    layer: 'Backend',
-    technologies: ['Express.js', 'ASP.NET Core'],
-  },
-  {
-    layer: 'Databases',
-    technologies: ['PostgreSQL', 'MongoDB', 'SQL Server'],
-  },
-  {
     layer: 'Languages',
+    technologies: ['C#', 'TypeScript', 'Python', 'SQL'],
+  },
+  {
+    layer: 'App Development',
+    technologies: ['ASP.NET Core', 'Next.js', 'React', 'VSTO'],
+  },
+  {
+    layer: 'Data & Analytics',
     technologies: [
-      'C#',
-      'TypeScript',
-      'Python',
-      'HTML',
-      'CSS',
-      'SQL',
-      'XAML',
-      'VB',
+      'Azure Synapse',
+      'Databricks',
+      'Power BI',
+      'Azure SQL',
+      'PostgreSQL',
     ],
   },
   {
-    layer: 'Cloud Providers',
-    technologies: ['Microsoft Azure', 'Vercel'],
+    layer: 'Cloud & Delivery',
+    technologies: [
+      'Azure',
+      'Vercel',
+      'Docker',
+      'Azure Pipelines',
+      'GitHub Actions',
+    ],
   },
   {
-    layer: 'Other',
-    technologies: ['Docker', 'Office Add-Ins', 'Windows Apps'],
+    layer: 'AI',
+    technologies: ['Claude Code', 'GitHub Copilot', 'LLM APIs'],
   },
 ]
 
@@ -142,7 +140,7 @@ function Resume() {
   const resume: Role[] = [
     {
       company: 'BDO USA',
-      title: 'TAS Data Analytics',
+      title: 'TAS Deal Analytics',
       logo: logoBdoUsa,
       start: '2021',
       end: {
@@ -211,46 +209,46 @@ function FAQ() {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
-        <AccordionTrigger>
-          What technologies do you specialize in?
-        </AccordionTrigger>
+        <AccordionTrigger>What do you work on?</AccordionTrigger>
         <AccordionContent>
           <div className="space-y-3">
             <p>
-              All things Microsoft: .NET (C#, VB, XAML, Web apps, Windows apps,
-              Office add-ins), SQL Server, PowerShell, and Azure (cloud
-              infrastructure, DevOps, Pipelines).
+              Software for finance — automation, internal platforms, and the
+              data pipelines and analytics behind them. Specifically, I build
+              tools for financial due diligence and M&amp;A, where the work has
+              to hold up to scrutiny from the other side of a deal.
             </p>
             <p>
-              I&apos;m also familiar with Python, although it&apos;s been a few
-              years since I&apos;ve worked with it extensively.
+              I like owning the whole lifecycle rather than one slice of it —
+              finding the problem by watching how the work actually gets done,
+              building the thing, shipping it, and keeping it running.
             </p>
           </div>
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
+        <AccordionTrigger>How did you get started?</AccordionTrigger>
+        <AccordionContent>
+          Impatience with a manual process. My first job out of college was on a
+          brand-new analytics team whose main output was a report that took
+          about 40 hours to put together, most of it spent reconciling product
+          names that didn&apos;t match between systems. I taught myself SQL,
+          then Python, and got it down to about a minute of active time.
+          I&apos;ve been writing code ever since.
+        </AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
         <AccordionTrigger>Do you work on side projects?</AccordionTrigger>
         <AccordionContent>
-          Yes, absolutely! I love working on side projects. My chosen stack is
-          Next.js + React, TypeScript, Tailwind CSS, Prisma ORM, Neon Postgres,
-          and Vercel. I&apos;ve worked on many different side projects that you
-          can check out on my{' '}
+          Yes, constantly. My chosen stack is Next.js + React, TypeScript,
+          Tailwind CSS, Prisma ORM, Neon Postgres, and Vercel — with the AI SDK
+          + Vercel AI Gateway for LLM features. The latest is a news agent that
+          reads a dozen RSS feeds and newsletters every morning, triages them,
+          and emails me a short brief. You can see the rest on my{' '}
           <Link href="/projects" className="underline underline-offset-4">
             Projects
           </Link>{' '}
           page.
-        </AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-3">
-        <AccordionTrigger>
-          What technologies would you like to work with?
-        </AccordionTrigger>
-        <AccordionContent>
-          I&apos;d like to continue working with .NET and Next.js + React.
-          I&apos;d like to start working more with Python again, specifically
-          learning one of the common backend frameworks like Django or FastAPI.
-          I&apos;m also curious to learn a low-level programming language like
-          C++ or Rust.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-4">
@@ -281,7 +279,10 @@ export default async function Home() {
             Hi, I&apos;m Sam.
           </h1>
           <p className="mt-6 text-base text-zinc-600 dark:text-zinc-400">
-            {getSiteDescription()}
+            I&apos;m a senior software engineer based in Washington, D.C.
+            I&apos;ve been writing code since 2018, mostly automation and data
+            work for finance and M&amp;A. This is my personal website, built to
+            introduce myself and showcase my work.
           </p>
           <div className="mt-6 flex gap-6">
             <SocialLink
