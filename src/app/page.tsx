@@ -71,7 +71,7 @@ function SocialLink({
 }) {
   return (
     <Link className="group -m-1 p-1" {...props}>
-      <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-zinc-600 dark:fill-zinc-400 dark:group-hover:fill-zinc-300" />
+      <Icon className="h-6 w-6 fill-zinc-500 transition group-hover:fill-teal-500 dark:fill-zinc-400 dark:group-hover:fill-teal-400" />
     </Link>
   )
 }
@@ -202,7 +202,7 @@ function FeaturedProjects({ projects }: { projects: Project[] }) {
         </h2>
         <Link
           href="/projects"
-          className="text-sm font-medium text-zinc-500 transition hover:text-teal-500 dark:text-zinc-400"
+          className="text-sm font-medium text-zinc-500 transition hover:text-teal-500 dark:text-zinc-400 dark:hover:text-teal-400"
         >
           See all <span aria-hidden="true">&rarr;</span>
         </Link>
