@@ -1,8 +1,8 @@
 import { type Metadata } from 'next'
 
+import { type Project, ProjectCard } from '@/components/ProjectCard'
 import { SimpleLayout } from '@/components/SimpleLayout'
 import { get } from '@vercel/edge-config'
-import { type Project, ProjectCard } from './ui/ProjectCard'
 
 export const metadata: Metadata = {
   title: 'Projects',
