@@ -135,10 +135,6 @@ jobs:
       - name: Type check
         run: pnpm typecheck
 
-      # Deliberately not pinned to a time zone. The runner is UTC, which is the
-      # one zone where site-description's UTC-parse/local-read mismatch used to
-      # cancel out — the tests that cover it set TZ per case instead, so they
-      # fail here if that bug comes back.
       - name: Test
         run: pnpm test
 

@@ -16,6 +16,8 @@ There is no database, no auth, no API, and no user-supplied input. Every page is
 
 That shape is the main thing to keep in mind when changing it. Reach for a client component, a fetch, or a state library only when the page can't answer the question at render time — so far, none of them can't.
 
+**This file describes the project's current state, not how it got here.** Why something changed, what it replaced, and what bug prompted it belong in the commit and the PR that made the change. Repeating them here makes this file grow with every change and go stale with each one.
+
 ## Stack
 
 - **Framework:** Next.js 16 (App Router) with React 19 — no React Compiler, `next.config.ts` is empty
@@ -76,7 +78,6 @@ src/
   images/                # Imported statically by next/image
   lib/
     utils.ts             # cn()
-    site-description.ts  # getYearsExperience(), getSiteDescription()
     formatDate.ts        # Template leftover, currently unused
 tailwind.config.ts       # Tailwind v4 config, bridged from globals.css via @config
 .github/
@@ -89,10 +90,9 @@ tailwind.config.ts       # Tailwind v4 config, bridged from globals.css via @con
 
 Almost all of it is hardcoded JSX in the page that renders it — the work history and the FAQ in `app/page.tsx`, the essay in `app/about/page.tsx`, the recommendations in `app/carve-outs/page.tsx`. That's the right default for a site this size: the content is prose with links and emphasis in it, so a data file would just be JSX in a less convenient place. Edit the page.
 
-Two exceptions:
+One exception:
 
 - **Projects** come from **Vercel Edge Config** (`get('projects')` in `app/projects/page.tsx`, typed as `Project[]` in `projects/ui/ProjectCard.tsx`). They live outside the repo so the list can be updated without a deploy. `get` returns `undefined` when the key is missing or `EDGE_CONFIG` isn't set, and the page renders an empty grid rather than failing — keep that. If you change the `Project` shape, the Edge Config value has to change with it; nothing validates the two against each other at build time.
-- **The site description** is derived, not written: `getSiteDescription()` in `lib/site-description.ts` interpolates `getYearsExperience()` so the years count doesn't go stale. It's used both as the home page's intro paragraph and as the root `metadata.description`, so edit it in one place.
 
 `sitemap.ts` lists the four routes by hand. Adding a route means adding it there and to both nav lists in `Header.tsx` (desktop and mobile) and the list in `Footer.tsx`.
 
@@ -146,12 +146,10 @@ Both libraries ship unstyled, so they cost nothing in traceability — every cla
 
 Tests run in the `checks` job, between typecheck and lint. The split is by **what a test needs in order to run**, since that's what decides its config, its command, and its CI job:
 
-- **Unit** — pure functions, which today means `lib/site-description.ts` and anything that joins it in `lib/`. No mocks, no request context, no network.
+- **Unit** — pure functions, which today means `lib/site-url.ts`, `app/sitemap.ts`, and anything that joins them. No mocks, no request context, no network.
 - **Component/E2E** — not set up. The site's actual risk is visual and navigational: the header's scroll math, the theme toggle surviving hydration, the four routes rendering. That's Playwright territory rather than jsdom, and the Playwright MCP server is already configured in `.mcp.json`.
 
-**Pin the clock and the time zone together** in anything that reads a date. `getYearsExperience` had a bug where a UTC-parsed date was read back with local-time accessors, so the answer was a year too high anywhere behind UTC — and invisible in CI and on Vercel, which both run UTC. The tests set `process.env.TZ` per case for exactly that reason; don't collapse them to a single zone, and don't pin the suite to UTC globally, or that whole class of bug stops being observable.
-
-Specs should mirror the `src/` path of what they cover — `src/lib/site-description.ts` → `test/unit/lib/site-description.test.ts`.
+Specs should mirror the `src/` path of what they cover — `src/lib/site-url.ts` → `test/unit/lib/site-url.test.ts`.
 
 The presentational components stay out of unit tests: testing them means mocking more than they contain.
 
