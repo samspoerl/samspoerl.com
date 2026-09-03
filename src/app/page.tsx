@@ -341,7 +341,7 @@ export default async function Home() {
             </div>
           )}
           <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 py-6 lg:px-10 dark:border-zinc-700/40">
-            <Stack layers={technologies} title="Technologies" />
+            <Stack layers={technologies} title="Stack" />
           </div>
           <div className="space-y-10 rounded-2xl border border-zinc-100 px-6 py-6 lg:px-10 dark:border-zinc-700/40">
             <Resume />
