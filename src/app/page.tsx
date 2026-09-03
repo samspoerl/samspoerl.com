@@ -325,7 +325,7 @@ export default async function Home() {
             <div className="max-w-xs px-2.5 lg:max-w-none">
               <Image
                 src={heroImage}
-                alt="headshot"
+                alt="Sam Spoerl"
                 sizes="(min-width: 1024px) 32rem, 20rem"
                 className="aspect-square rounded-2xl bg-zinc-100 object-cover dark:bg-zinc-800"
               />
