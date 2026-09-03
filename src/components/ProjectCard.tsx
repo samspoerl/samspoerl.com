@@ -74,7 +74,7 @@ export function ProjectCard({
             className="self-end"
             aria-label="View repository on GitHub"
           >
-            <GitHubIcon className="h-6 w-6 fill-zinc-800 transition hover:fill-zinc-400 dark:fill-zinc-100" />
+            <GitHubIcon className="h-6 w-6 fill-zinc-500 transition hover:fill-zinc-600 dark:fill-zinc-400 dark:hover:fill-zinc-300" />
           </a>
         )}
       </div>
