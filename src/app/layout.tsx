@@ -1,6 +1,5 @@
 import { Providers } from '@/app/providers'
 import { Layout } from '@/components/Layout'
-import { getSiteDescription } from '@/lib/site-description'
 import { SITE_URL } from '@/lib/site-url'
 import { Analytics } from '@vercel/analytics/react'
 import { type Metadata } from 'next'
@@ -15,7 +14,8 @@ export const metadata: Metadata = {
     template: '%s - Sam Spoerl',
     default: 'Sam Spoerl',
   },
-  description: getSiteDescription(),
+  description:
+    'Senior software engineer in Washington, D.C. I build automation, data pipelines, and internal platforms for finance and M&A workflows, plus side projects.',
   keywords: ['sam spoerl', 'samspoerl', 'samuel spoerl', 'spoerl'],
   alternates: {
     // './' resolves against the current route's pathname, so this one
