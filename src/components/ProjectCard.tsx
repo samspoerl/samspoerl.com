@@ -47,7 +47,7 @@ export function ProjectCard({
         <a
           href={project.demoLink}
           target="_blank"
-          className="w-fit text-sm font-semibold text-zinc-800 hover:text-zinc-400 dark:text-zinc-100"
+          className="w-fit text-sm font-semibold text-zinc-800 transition hover:text-teal-500 dark:text-zinc-100 dark:hover:text-teal-400"
         >
           <div className="flex flex-row items-center gap-2">
             <p>{project.demoLink.replace('https://', '')}</p>
@@ -74,7 +74,7 @@ export function ProjectCard({
             className="self-end"
             aria-label="View repository on GitHub"
           >
-            <GitHubIcon className="h-6 w-6 fill-zinc-500 transition hover:fill-zinc-600 dark:fill-zinc-400 dark:hover:fill-zinc-300" />
+            <GitHubIcon className="h-6 w-6 fill-zinc-500 transition hover:fill-teal-500 dark:fill-zinc-400 dark:hover:fill-teal-400" />
           </a>
         )}
       </div>
