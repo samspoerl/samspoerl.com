@@ -322,7 +322,7 @@ export default async function Home() {
             </div>
           </div>
           <div className="lg:pl-20">
-            <div className="max-w-xs px-2.5 lg:max-w-none">
+            <div className="mx-auto max-w-xs px-2.5 lg:mx-0 lg:max-w-none">
               <Image
                 src={heroImage}
                 alt="Sam Spoerl"
