@@ -12,6 +12,7 @@ import {
 import { GitHubIcon, LinkedInIcon } from '@/components/SocialIcons'
 import { Stack, TechLayer } from '@/components/Stack'
 import logoBdoUsa from '@/images/logos/bdo-usa.svg'
+import logoCostarGroup from '@/images/logos/costar-group.svg'
 import logoDirectSupply from '@/images/logos/direct-supply.svg'
 import heroImage from '@/images/photos/headshot-black-tshirt.jpg'
 import { get } from '@vercel/edge-config'
@@ -159,14 +160,21 @@ function Role({ role }: { role: Role }) {
 function Resume() {
   const resume: Role[] = [
     {
-      company: 'BDO USA',
-      title: 'TAS Deal Analytics',
-      logo: logoBdoUsa,
-      start: '2021',
+      company: 'CoStar Group',
+      title: 'Platform Development',
+      logo: logoCostarGroup,
+      start: '2026',
       end: {
         label: 'Present',
         dateTime: new Date().getFullYear().toString(),
       },
+    },
+    {
+      company: 'BDO USA',
+      title: 'TAS Deal Analytics',
+      logo: logoBdoUsa,
+      start: '2021',
+      end: '2026',
     },
     {
       company: 'Direct Supply',
