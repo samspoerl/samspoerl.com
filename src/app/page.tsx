@@ -161,7 +161,7 @@ function Resume() {
   const resume: Role[] = [
     {
       company: 'CoStar Group',
-      title: 'Platform Development',
+      title: 'Senior Software Engineer',
       logo: logoCostarGroup,
       start: '2026',
       end: {
